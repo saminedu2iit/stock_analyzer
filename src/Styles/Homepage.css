@@ -57,6 +57,7 @@ body
     width: 22%;
     height: 98%;
     overflow-y: auto;
+    background-color: blanchedalmond;
 }
 
 #stock_searchbar{
