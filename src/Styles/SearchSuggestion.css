@@ -1,0 +1,18 @@
+#search_suggestion_container{
+
+
+background-color: rgb(245, 140, 145);
+position: relative;
+width: 41%;
+margin-left: 8vw;
+z-index: 2;
+
+
+}
+.suggestion_list_item{
+    border: 1px solid black;
+}
+
+.suggestion_list_item:hover{
+    cursor: grab;
+}

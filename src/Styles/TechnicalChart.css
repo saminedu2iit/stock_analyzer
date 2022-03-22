@@ -1,0 +1,22 @@
+#stock_line_chart{
+    border: 2px solid black;
+    width: 93vw !important;
+    height: 90vh !important;
+    background-color:blanchedalmond
+
+}
+
+#stock_line_chart_div{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#technical_chart_period_div{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5vw;
+}

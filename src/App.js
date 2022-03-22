@@ -1,24 +1,68 @@
-import logo from './logo.svg';
+import Homepage from './Components/Homepage';
 import './App.css';
+import './Components/Navbar'
+import Navbar from './Components/Navbar';
+import { BrowserRouter,Route, Router } from 'react-router-dom';
+import TechnicalChart from './Components/TechnicalChart';
+import { GlobalStateStore, GlobalStateStoreData } from './Components/GlobalStateStore';
+import About from './Components/About';
+import Learn from './Components/Learn';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalStateStoreData>
+    <BrowserRouter>
+      <div className="App">
+        <Navbar/>
+        {/* <Route exact path="/technicalChart" component={TechnicalChart}></Route>
+        <Route exact path="/" component={Homepage}></Route> */}
+     
+          {/* <Homepage/> */}
+
+          <Route exact path="/about" render={() => { 
+            return (
+              <>
+              
+                {/* <Navbar /> */}
+                <About />
+              </>);
+          }}>
+
+          </Route>
+
+          <Route exact path="/" render={() => {
+            return (
+              <>
+              {/* <Navbar /> */}
+              <Homepage />
+              <TechnicalChart/>
+            </>
+              
+            )
+           
+          }}>
+            </Route>
+
+      <Route exact path="/learn" render={() => {
+            return (
+              <>
+              {/* <Navbar /> */}
+              <Learn />
+              
+            </>
+              
+            )
+           
+          }}> 
+
+          </Route>
+
+
+         
+         
+      </div>
+      </BrowserRouter>
+      </GlobalStateStoreData>
   );
 }
 

@@ -1,0 +1,25 @@
+#navbar_div{
+
+    width: 98vw;
+    height: 5vh;
+    border: 2px solid black;
+    background-color: rgb(179, 137, 226);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+
+#navbar_links_holder_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+    text-transform: uppercase;
+    /* background-color: aqua; */
+    margin-left: 1vw;
+    height: 100%;
+}
+

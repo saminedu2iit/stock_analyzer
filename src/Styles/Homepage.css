@@ -1,0 +1,374 @@
+body
+{
+    font-family: 'Open Sans', sans-serif;
+}
+
+#stock_header_span_0{
+    font-weight: bold;
+}
+.entity_description{
+    font-weight: bold;
+}
+
+#homepage_container{
+    border: 2px solid black;
+    margin-top: 2vh;
+    width: 98vw;
+    height: 125vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#homepage_container_top{
+    margin-top: 1vh;
+    border: 2px solid blue;
+    width: 97vw;
+    height: 87vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+
+}
+
+#homepage_container_bottom{
+    border: 2px solid red;
+    width: 97vw;
+    height: 35vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#homepage_container_top_left{
+    border: 2px solid black;
+    width: 76%;
+    height: 98%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+#homepage_container_top_right{
+    border: 2px solid black;
+    width: 22%;
+    height: 98%;
+    overflow-y: auto;
+}
+
+#stock_searchbar{
+    border: 2px solid gold;
+    width: 99%;
+    height: 15%;
+}
+
+#stock_info_header{
+    border: 2px solid black;
+    width: 99%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+}
+
+
+#stock_line_info{
+    border: 2px solid red;
+    width: 99%;
+    height: 49%;
+
+}
+
+#stock_search_bar_top{
+    width: 100%;
+    height: 50%;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+}
+
+#stock_input{
+    width: 40%;
+}
+
+#stock_info_header_left{
+    height: 97%;
+    width: 16%;
+    border: 2px solid orange;
+}
+
+#stock_info_header_right{
+    height: 97%;
+    width: 83%;
+    border: 2px solid violet;
+}
+
+#stock_info_header_right_row_1,#stock_info_header_right_row_3{
+    background-color: rgb(243, 240, 234);
+}
+#stock_info_header_right_row_2,#stock_info_header_right_row_4{
+    background-color: rgb(231, 199, 203);
+}
+
+#stock_info_header_right_row_1,#stock_info_header_right_row_2,#stock_info_header_right_row_3,#stock_info_header_right_row_4{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#stock_info_header_left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+#watchlist_title{
+    width: 100%;
+    height: 8%;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 4%;
+}
+
+
+/* TESTING */
+
+
+
+
+
+#stock_header_info{
+    width: 99%;
+    height: 32%;
+    border: 2px solid green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1%;
+}
+
+#stock_line_info{
+    width: 99%;
+    height: 53%;
+    border: 2px solid red;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:1%
+}
+
+
+#technical_analysis_title{
+    background-color: aqua;
+    width: 100%;
+    height: 8%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#technical_analysis_body{
+
+    background-color:blanchedalmond;
+    width: 100%;
+    height: 89%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap:35px;
+}
+
+#stock_line_info_left{
+    border: 2px solid black;
+    width: 20%;
+    height: 96%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+   
+}
+
+#stock_line_info_right{
+    border: 2px solid black;
+    width: 77%;
+    height: 96%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
+#rsi_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10%;
+
+    border: 2px solid black;
+    width: 60%;
+    height: 10%;
+}
+
+#financial_info_div_0{
+    width: 100%;
+    height: 8%;
+    background-color: aqua;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: bold;
+  
+}
+
+#financial_info_div_1{
+    width: 100%;
+    height: 28%;
+    background-color: rgb(250, 227, 185);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+#financial_info_div_2{
+    width: 100%;
+    height: 28%;
+    background-color: rgb(250, 227, 185);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+
+#financial_info_div_3{
+    width: 100%;
+    height: 28%;
+    background-color: rgb(250, 227, 185);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+}
+
+
+
+.quarterly_net_profit_row,.quarterly_net_profit_column,.cash_from_OA_row,.cash_from_OA_column,.revenue_row,.revenue_column{
+    border: 2px solid black;
+    text-align: center;
+}
+
+#homepage_container_bottom_left{
+    border: 2px solid black;
+    height: 97%;
+    width: 77%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+#homepage_container_bottom_right{
+    border: 2px solid black;
+    height: 97%;
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#homepage_container_bottom_left_header{
+    width: 100%;
+    height: 17%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color:aqua;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#homepage_container_bottom_left_body{
+    width: 100%;
+    height: 80%;
+    
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: blanchedalmond;
+}
+
+#homepage_container_bottom_right_header{
+    width: 100%;
+    height: 17%;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#homepage_container_bottom_right_body{
+    width: 100%;
+    height: 80%;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+  
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    background-color: blanchedalmond;
+}
+
+#stock_search_button:hover{
+    cursor: pointer;
+}
+
+.peers_list_item_div{
+   border: 1px solid black;
+   width: 98%;
+   height: 100px;
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+}
+#financial_info_div_1sub_div_left,#financial_info_div_2sub_div_left,#financial_info_div_3sub_div_left
+{
+    font-weight: bold;
+    padding-left: 5px;
+    font-size: 17px;
+}

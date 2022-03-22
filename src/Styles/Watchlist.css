@@ -1,0 +1,42 @@
+.watchlist_item{
+    width: 98%;
+    height: 35px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    
+}
+
+.watchlist_item_div_left{
+/* border: 1px solid red; */
+width: 86%;
+height: 100%;
+background-color: blanchedalmond;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+}
+.watchlist_item_div_left:hover{
+background-color: rgb(230, 122, 122);
+}
+
+.watchlist_item_div_right{
+    width: 14%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete_watchlist_item_button{
+    width: 100%;
+    height: 100%;
+    background-color: orange;
+    cursor:pointer;
+}
+
+.delete_watchlist_item_button:hover{
+    background-color: gray;
+}
