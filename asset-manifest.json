@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/saminedu2iit/stock_analyzer/static/css/main.55857502.css",
-    "main.js": "/saminedu2iit/stock_analyzer/static/js/main.f0b7bb6f.js",
-    "index.html": "/saminedu2iit/stock_analyzer/index.html",
-    "main.55857502.css.map": "/saminedu2iit/stock_analyzer/static/css/main.55857502.css.map",
-    "main.f0b7bb6f.js.map": "/saminedu2iit/stock_analyzer/static/js/main.f0b7bb6f.js.map"
+    "main.css": "/stock_analyzer/static/css/main.540c6710.css",
+    "main.js": "/stock_analyzer/static/js/main.18fcf133.js",
+    "index.html": "/stock_analyzer/index.html",
+    "main.540c6710.css.map": "/stock_analyzer/static/css/main.540c6710.css.map",
+    "main.18fcf133.js.map": "/stock_analyzer/static/js/main.18fcf133.js.map"
   },
   "entrypoints": [
-    "static/css/main.55857502.css",
-    "static/js/main.f0b7bb6f.js"
+    "static/css/main.540c6710.css",
+    "static/js/main.18fcf133.js"
   ]
 }
