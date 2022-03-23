@@ -1,9 +1,8 @@
 import './../Styles/Watchlist.css'
-import { LocalStorageRemoveItem } from './../Utilities/LocalStorageUtilities';
 
 function Watchlist(props) { 
 
-    console.log("Watchlist rendered ....")
+    
 
     function getStockNameFromString(stock_string) { 
 
@@ -26,7 +25,7 @@ function Watchlist(props) {
            
           
         }
-       // console.log("returning ",stock_name)
+     
         return stock_name;
     }
 
@@ -38,11 +37,7 @@ function Watchlist(props) {
                 onClick={() => { 
                     
                     props.searchStockHandle(getStockNameFromString(element));
-                    //props.setInputStock(getStockNameFromString(element));
-                    // setTimeout(() => {
-                    //     //props.setInputStock(getStockNameFromString(element));
-                    //     props.searchStockHandle(getStockNameFromString(element));
-                    // }, 2000)
+                   
                   
                     }}
                 >{getStockNameFromString(element)}

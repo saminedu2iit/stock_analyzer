@@ -1,7 +1,6 @@
 function StockSuggestions(props) {
 
-    console.log("StockSuggestions rendered")
-    
+        
     return (
         <ol>
             {props.suggestionsList.map((element, index) => {

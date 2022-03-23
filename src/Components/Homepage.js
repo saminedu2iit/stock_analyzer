@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { GlobalStateStore } from "./GlobalStateStore";
 import { getArrayOfDailyClosingPrice } from './../Utilities/TechnicalCartUtilities';
 import StockSuggestions from './StockSuggestions';
+import News from './News'
 
 
 let API_key = "6ce511bda188cc745eb33e6ad907c5ec";
@@ -83,12 +84,12 @@ function Homepage() {
 
     
     function testFunc() { 
-        //console.log("actual debounce")
+        console.log("actual debounce")
     }
     const debounceGenerateStockSuggestions = function (fn, delay) {
         
         let timeoutID;
-        //console.log("debounce called")
+        console.log("debounce called")
 
         return function (...args) { 
 
@@ -307,7 +308,7 @@ function Homepage() {
     if (updateLocalStorageRequired === true) { 
         addToLocalStorageWatchList(watchlistItems);
 
-        //console.log("Updaetd watchlist - ", watchlistItems, "length = ", watchlistItems.length, "type = ",typeof watchlistItems);
+        console.log("Updaetd watchlist - ", watchlistItems, "length = ", watchlistItems.length, "type = ",typeof watchlistItems);
         setUpdateLocalStorageRequired(false)
     }
 
@@ -420,6 +421,7 @@ function Homepage() {
                 </div>
                 
             </div>
+            
         </div>
     )
 

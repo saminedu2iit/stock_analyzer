@@ -3,7 +3,7 @@
 function getArrayOfDailyClosingPrice(stock_name, setp1, setp2, chartPeriod) {
     
     let chart_period;
-    //console.log("GG",chartPeriod)
+ 
 
     let finalArr = [];
     let arrDates = [];
@@ -28,19 +28,17 @@ function getArrayOfDailyClosingPrice(stock_name, setp1, setp2, chartPeriod) {
 
     
 
-    //console.log('peri',chart_period)
+    
 
     let daily_closing_price_link = "https://fmpcloud.io/api/v3/historical-price-full/" + stock_name + "?serietype=line&apikey=6ce511bda188cc745eb33e6ad907c5ec";
 
-    //console.log("print it = ",daily_closing_price_link)
-    //console.log(daily_closing_price_link);
+   
 
     let promise1 = fetch(daily_closing_price_link);
     promise1.then((intermediate_data) => { 
         let promise2 = intermediate_data.json();
         promise2.then((json_data) => { 
-           // console.log(json_data);
-           // console.log('peri',chart_period)
+           
             for (let i = 0; i < chart_period; i++) { 
                 arrDates.push(json_data['historical'][i]['date']);
                 arrClosingPrices.push(json_data['historical'][i]['close'])
@@ -54,7 +52,7 @@ function getArrayOfDailyClosingPrice(stock_name, setp1, setp2, chartPeriod) {
         })
     })
 
-   // console.log("FINALL ", arrDates, arrClosingPrices);
+   
     return finalArr;
     
 }

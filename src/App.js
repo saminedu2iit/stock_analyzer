@@ -7,6 +7,7 @@ import TechnicalChart from './Components/TechnicalChart';
 import { GlobalStateStore, GlobalStateStoreData } from './Components/GlobalStateStore';
 import About from './Components/About';
 import Learn from './Components/Learn';
+import News from './Components/News'
 
 function App() {
   return (
@@ -35,7 +36,8 @@ function App() {
               <>
               {/* <Navbar /> */}
               <Homepage />
-              <TechnicalChart/>
+                <TechnicalChart />
+                {/* <News/> */}
             </>
               
             )

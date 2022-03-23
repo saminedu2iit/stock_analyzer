@@ -1,0 +1,17 @@
+#news_div{
+    width: 94vw !important;
+    margin-left: 25px;
+    height: 75vh;
+    border: 2px solid black;
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10vw;
+}
+
+#news_item_1,#news_item_2,#news_item_3{
+    width: 20%;
+    height: 50%;
+    border: 2px solid black;
+}

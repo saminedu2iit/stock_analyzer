@@ -8,7 +8,7 @@ let quarterlyProfitGrowthOverThreeQuarters;
 function populateExahangeCMPinNavbar(inputExchange,API_key) { 
 
     let [stock_name_extention, stock_exchange_symbol] = getExchangeExtentionAndSymbol(inputExchange);
-    //console.log(stock_name_extention,stock_exchange_symbol)
+  
     let stock_exchange_index_link = "https://fmpcloud.io/api/v3/quote/" + stock_exchange_symbol  + "?apikey=" + API_key;
 
     let stock_exchange_index_link_promise1 = fetch(stock_exchange_index_link);
@@ -311,30 +311,7 @@ async function populateTechnicalAnalysis(API_link_200_sma, API_link_50_sma, API_
         
         message = `Technical analysis is giving ${technical_analysis_signal} signal`;
         copyStockSuggestions.push(message)
-
-        // let rsi_promsise1 = fetch(RSI_link); 
-        // console.log("rsi promise",rsi_promsise1)
-        // rsi_promsise1.then((intermediate_data) => { 
-        //     let rsi_promise2 = intermediate_data.json();
-        //     console.log("rsi_promise2 = ", rsi_promise2);
-        //     rsi_promise2.then((real_data) => {
-
-        //         console.log("rsi real data = ",real_data)
-        //         let rsi = real_data[0]['rsi'].toFixed(2);
-               
-        //         // document.querySelector('#rsa_div').innerText = "RSI : " + rsi;
-        //         // if (rsi < 30) {
-        //         //     suggestion_message.push(`RSI of this stock is ${rsi}, hence its a good time to buy this stock if fundamentals are good`)
-                   
-        //         // }
-        //         // else if (rsi > 70) { 
-        //         //     suggestion_message.push(`RSI of this stock is ${rsi}, hence the stock might have risen a lot and might correct in upcoming sessions`)
-        //         // }
-
-                
-
-        //     })
-        // })
+    
         
         let rsi_promsise1 = fetch(RSI_link);
 
@@ -370,7 +347,7 @@ async function populateTechnicalAnalysis(API_link_200_sma, API_link_50_sma, API_
     document.querySelector('#moving_average_table_row4_column_2').innerHTML = cmp;
     document.querySelector('#moving_average_table_row5_column_1').innerHTML = "Signal";
     document.querySelector('#moving_average_table_row5_column_2').innerHTML = technical_analysis_signal;
-    document.querySelector('#rsi_div').innerHTML = "RSI HT = " + rsi;
+   
        
      }, 2000);
 
@@ -600,7 +577,7 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
             }
 
             
-            let cashFromOA_data = [];
+           
 
             let cashFromOperatingActivities_promise1 = fetch(cash_from_operating_activities_link);
             cashFromOperatingActivities_promise1.then((intermediate_data) => { 
@@ -639,9 +616,7 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
             
             
 
-            let month;
-            let quarter;
-            let year;
+            
             let period;
 
             
@@ -675,8 +650,7 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
                             
                             period="Q1"
                         }
-                        //  document.querySelector(target_element).innerText = (final_data[j]["date"].slice(0, 4) + "-" + final_data[j]['period']);
-                        //  document.querySelector(target_element).style.fontWeight = "bold";
+                       
                          document.querySelector(target_element).innerText = (year + "-" + period);
                          document.querySelector(target_element).style.fontWeight = "bold";
                      }
@@ -718,7 +692,7 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
                      if (i == 0) {
                         let year = final_data[j]["date"].slice(0, 4);
                         let month = final_data[j]["date"].slice(5, 7);
-                        // document.querySelector(target_element).innerText = final_data[j]["date"].slice(0, 4) + "-" + final_data[j]['period'];
+                      
                         document.querySelector(target_element).innerText = (year + "-" + period);
                          document.querySelector(target_element).style.fontWeight = "bold";
                      }
