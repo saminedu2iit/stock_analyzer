@@ -1,4 +1,29 @@
 #about_div{
 
     border: 2px solid black;
+    height: 90vh;
+    width: 98vw;
+    margin-top: 1vh;
+    background-color: blanchedalmond;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
 }
+
+#about_heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+#about_para{
+    padding: 10px;
+}
+
+#about_heading{
+    border: 2px solid black;
+    width: 99%;
+}
+

@@ -31,7 +31,7 @@ function App() {
 
           </Route>
 
-          <Route exact path="/stock_analyzer" render={() => {
+          <Route exact path="/home" render={() => {
             return (
               <>
               {/* <Navbar /> */}
