@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/saminedu2iit/stock_analyzer/static/css/main.55857502.css",
+    "main.js": "/saminedu2iit/stock_analyzer/static/js/main.f0b7bb6f.js",
+    "index.html": "/saminedu2iit/stock_analyzer/index.html",
+    "main.55857502.css.map": "/saminedu2iit/stock_analyzer/static/css/main.55857502.css.map",
+    "main.f0b7bb6f.js.map": "/saminedu2iit/stock_analyzer/static/js/main.f0b7bb6f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.55857502.css",
+    "static/js/main.f0b7bb6f.js"
+  ]
+}
