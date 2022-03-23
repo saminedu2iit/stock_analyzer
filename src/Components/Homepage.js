@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { GlobalStateStore } from "./GlobalStateStore";
 import { getArrayOfDailyClosingPrice } from './../Utilities/TechnicalCartUtilities';
 import StockSuggestions from './StockSuggestions';
-import News from './News'
+
 
 
 let API_key = "6ce511bda188cc745eb33e6ad907c5ec";
@@ -105,9 +105,10 @@ function Homepage() {
 
     }
    
-    let populateExchangeCMPinterval = setInterval(() => {
-        populateExahangeCMPinNavbar(inputExchange, API_key);
-    }, 10000);
+    // let populateExchangeCMPinterval = setInterval(() => {
+    //     console.log("showing for",inputExchange)
+    //     populateExahangeCMPinNavbar(inputExchange, API_key);
+    // }, 10000);
     function generatStockSuggestions(input_stock) { 
         if (input_stock.length > 0) {
             let stock_suggestions_link = `https://fmpcloud.io/api/v3/search?query=${inputStock}&limit=10&exchange=${inputExchange}&apikey=${API_key}`
@@ -167,7 +168,7 @@ function Homepage() {
         setStockSearchSuggestions([]);
        
         
-        
+        populateExahangeCMPinNavbar(inputExchange, API_key);
 
         if (inputStock === "") {
             alert("Error ! Search bar is empty. Please enter stock name to search");
@@ -208,6 +209,7 @@ function Homepage() {
 
     function searchStockHandle2(stock) { 
         // console.log("Search for - ", inputStock);
+        populateExahangeCMPinNavbar(inputExchange, API_key);
         setStockSearchSuggestions([]);
         getArrayOfDailyClosingPrice(stock,setp1,setp2,chartPeriod);
             

@@ -5,7 +5,9 @@ let quarterlyProfitGrowthOverFourQuarters;
 let quarterlyProfitGrowthOverThreeQuarters;
 
 
-function populateExahangeCMPinNavbar(inputExchange,API_key) { 
+function populateExahangeCMPinNavbar(inputExchange, API_key) {
+    
+    console.log("get for ",inputExchange)
 
     let [stock_name_extention, stock_exchange_symbol] = getExchangeExtentionAndSymbol(inputExchange);
   
