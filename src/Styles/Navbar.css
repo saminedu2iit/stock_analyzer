@@ -30,5 +30,22 @@
 
 #index_cmp{
     margin-right: 1vw;
-    font-weight: bold;
+   
+    color:black
+}
+
+.navbar_div_link_span{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+.navbar_div_link_span:hover{
+    height: 100%;
+    background-color: antiquewhite;
+    
 }
