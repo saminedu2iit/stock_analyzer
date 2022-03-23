@@ -1,8 +1,8 @@
 import './../Styles/Homepage.css'
-import { useState,useMemo } from 'react';
+import { useState,useMemo, useEffect } from 'react';
 import SearchSuggestions from './SearchSuggestions';
 import TechnicalChart from './TechnicalChart'
-import { populateStockPeers,populateStockHeaderInfo,populateTechnicalAnalysis,populateFinancialInformation,generateSuggestions } from './../Utilities/HomepageUtilities';
+import { populateStockPeers,populateStockHeaderInfo,populateTechnicalAnalysis,populateFinancialInformation,styleNavbarMessageBox,generateSuggestions,populateExahangeCMPinNavbar } from './../Utilities/HomepageUtilities';
 import { addToLocalStorageWatchList, getWatchlistArrayFromLocalStorage, LocalStorageRemoveItem } from '../Utilities/LocalStorageUtilities.js';
 import { Link } from 'react-router-dom';
 import Watchlist from './Watchlist';
@@ -31,7 +31,7 @@ function Homepage() {
     let [chartPeriod, setChartPeriod] = useState('90_days');
     let [suggestionsList, setSuggestionsList] = useState([])
 
-    let [stockTechnicalChart, setStockTechnicalChart, p1, setp1, p2, setp2] = useContext(GlobalStateStore);
+    let [stockTechnicalChart, setStockTechnicalChart, p1, setp1, p2, setp2,navbarMsg,setNavbarMsg,chartPeriodGlobal, setChartPeriodGlobal] = useContext(GlobalStateStore);
 
     if (isWatchlistLoaded === false) {
         let watchlistArray = getWatchlistArrayFromLocalStorage();
@@ -40,6 +40,27 @@ function Homepage() {
     
 
     }
+
+    useEffect(() => {
+        styleNavbarMessageBox(20);
+
+        
+        document.querySelector('#add_to_watchlist_button').style.visibility = "hidden";
+        document.querySelector('#stock_header_span_2').visibility = "hidden";
+    
+        
+        setNavbarMsg("WELCOME !");
+
+        setTimeout(() => {
+            document.querySelector('#stock_input').focus();
+            setNavbarMsg("Start your stock analyis by typing your stock name");
+            setTimeout(() => {
+                setNavbarMsg("");
+                // document.querySelector('#stock_input').blur();
+            }, 6000)
+    
+        }, 3000)
+    },[])
     
     let memoizedWatchlist = useMemo(() => {
         return (<Watchlist watchlistItems={watchlistItems}
@@ -58,17 +79,16 @@ function Homepage() {
    
 
 
-    //localStorage.removeItem('watchlistArrayAsList');
-    //console.log(watchlistItems)
+    
 
     
     function testFunc() { 
-        console.log("actual debounce")
+        //console.log("actual debounce")
     }
     const debounceGenerateStockSuggestions = function (fn, delay) {
         
         let timeoutID;
-        console.log("debounce called")
+        //console.log("debounce called")
 
         return function (...args) { 
 
@@ -84,6 +104,9 @@ function Homepage() {
 
     }
    
+    let populateExchangeCMPinterval = setInterval(() => {
+        populateExahangeCMPinNavbar(inputExchange, API_key);
+    }, 10000);
     function generatStockSuggestions(input_stock) { 
         if (input_stock.length > 0) {
             let stock_suggestions_link = `https://fmpcloud.io/api/v3/search?query=${inputStock}&limit=10&exchange=${inputExchange}&apikey=${API_key}`
@@ -117,7 +140,7 @@ function Homepage() {
       
         setInputStock(input_stock);
 
-        debounceGenerateStockSuggestions(testFunc, 2000);
+        //debounceGenerateStockSuggestions(testFunc, 2000);
         
               
 
@@ -154,7 +177,7 @@ function Homepage() {
             
             setStockTechnicalChart(inputStock);
             
-            
+            let RSI_link = "https://fmpcloud.io/api/v3/technical_indicator/daily/"+inputStock + "?period=10&type=rsi&apikey=" + API_key
             let API_link_stock_intro = "https://fmpcloud.io/api/v3/profile/" + inputStock + "?apikey=" + API_key;
             let stock_52_high_52_low_link = "https://fmpcloud.io/api/v3/quote/" + inputStock + "?apikey=" + API_key;
             let API_link_200_sma = "https://fmpcloud.io/api/v3/technical_indicator/daily/"+inputStock+"?period=200&type=sma&apikey=" + API_key
@@ -165,10 +188,10 @@ function Homepage() {
             let stock_peers_link = "https://fmpcloud.io/api/v4/stock_peers?symbol="+inputStock+"&apikey="+ API_key;
 
 
-
-            populateStockHeaderInfo(API_link_stock_intro, stock_52_high_52_low_link,setSuggestionsList);
+            
+            populateStockHeaderInfo(API_link_stock_intro, stock_52_high_52_low_link,setSuggestionsList,navbarMsg,setNavbarMsg);
             //console.log("DISPLAYING :", currentDisplayedStock);
-            populateTechnicalAnalysis(API_link_200_sma, API_link_50_sma, API_link_20_sma, isPageLoadingForFirstTime);
+            populateTechnicalAnalysis(API_link_200_sma, API_link_50_sma, API_link_20_sma, isPageLoadingForFirstTime,RSI_link);
             populateFinancialInformation(isPageLoadingForFirstTime, quarterly_income_statement_link, cash_from_operating_activities_link);
             populateStockPeers(stock_peers_link);
             //generateSuggestions(setSuggestionsList)
@@ -204,7 +227,7 @@ function Homepage() {
  
  
  
-             populateStockHeaderInfo(API_link_stock_intro, stock_52_high_52_low_link,setSuggestionsList);
+             populateStockHeaderInfo(API_link_stock_intro, stock_52_high_52_low_link,setSuggestionsList,navbarMsg,setNavbarMsg);
              //console.log("DISPLAYING :", currentDisplayedStock);
              populateTechnicalAnalysis(API_link_200_sma, API_link_50_sma, API_link_20_sma, isPageLoadingForFirstTime,RSI_link);
              populateFinancialInformation(isPageLoadingForFirstTime, quarterly_income_statement_link, cash_from_operating_activities_link);
@@ -284,7 +307,7 @@ function Homepage() {
     if (updateLocalStorageRequired === true) { 
         addToLocalStorageWatchList(watchlistItems);
 
-        console.log("Updaetd watchlist - ", watchlistItems, "length = ", watchlistItems.length, "type = ",typeof watchlistItems);
+        //console.log("Updaetd watchlist - ", watchlistItems, "length = ", watchlistItems.length, "type = ",typeof watchlistItems);
         setUpdateLocalStorageRequired(false)
     }
 
@@ -300,7 +323,7 @@ function Homepage() {
                     <div id="stock_searchbar">
                         <div id="stock_search_bar_top">
                             <span className='entity_description'>Stock</span>
-                            <input type="text" id="stock_input" value={inputStock} onChange={inputStockHandle}></input>    
+                            <input type="text" id="stock_input" value={inputStock} onChange={inputStockHandle} placeholder="Enter stock name"></input>    
                             <span className='entity_description'>Exchange</span>
                             <select id="exchange_dropdown" value={inputExchange} onChange={(e) => { setInputExchange(e.target.value)}}>
                                 <option value="NSE">NSE</option>
@@ -334,7 +357,7 @@ function Homepage() {
                             <div id="stock_info_header_right_row_1">
                             <span id="stock_header_span_0"></span>
                                 <span id="stock_header_row_1_span2">
-                                    <input type="button" readOnly value="Add to Watchlist" onClick={addToWatchlistHandle}></input>
+                                    <input type="button" id="add_to_watchlist_button" readOnly value="Add to Watchlist" onClick={addToWatchlistHandle}></input>
                                 </span>
                             </div>
                             <div id="stock_info_header_right_row_2">
@@ -367,7 +390,11 @@ function Homepage() {
 
                             </div>
                         </div>
-                        <div id="stock_line_info_right"></div>
+                        <div id="stock_line_info_right">
+                            <div id="stock_line_info_right_top">Financial information comes here</div>
+                            <div id="stock_line_info_right_bottom"></div>
+                            
+                        </div>
                     </div>
                 </div>
                 <div id="homepage_container_top_right">

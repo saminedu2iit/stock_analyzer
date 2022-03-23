@@ -30,8 +30,8 @@ ChartJS.register(
 
 function TechnicalChart() {
 
-  let [stockTechnicalChart, setStockTechnicalChart, p1, setp1, p2, setp2] = useContext(GlobalStateStore);
-  console.log("Technical chart rendered");
+  let [stockTechnicalChart, setStockTechnicalChart, p1, setp1, p2, setp2, navbarMsg, setNavbarMsg] = useContext(GlobalStateStore);
+  //console.log("Technical chart rendered");
   //getArrayOfDailyClosingPrice(stockTechnicalChart);
 
   

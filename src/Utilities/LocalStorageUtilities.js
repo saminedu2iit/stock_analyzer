@@ -12,7 +12,7 @@ function getWatchlistArrayFromLocalStorage() {
     let arrayAsString = localStorage.getItem('watchlistArrayAsList');
     
     if (arrayAsString === null) {
-        console.log("Empty Watchlist")
+        //console.log("Empty Watchlist")
         return [];
     }
     else { 

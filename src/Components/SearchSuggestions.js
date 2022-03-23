@@ -10,7 +10,7 @@ function SearchSuggestions(props) {
                 
                 props.suggestion_list.map((element, index) => { 
                     return (<div className='suggestion_list_item' key={index} onClick={() => {
-                        console.log("choice =  ", element['symbol'], element['exchangeShortName'], element['name']);
+                        //console.log("choice =  ", element['symbol'], element['exchangeShortName'], element['name']);
                         props.setInputStock(element['symbol'])
                         props.setStockSearchSuggestions([])
                         props.setCurrentDisplayedStock({

@@ -1,4 +1,27 @@
 let copyStockSuggestions = [];
+let highestEverQuarterlyNetProfitFlag;
+let lossInLatestQuarter;
+let quarterlyProfitGrowthOverFourQuarters;
+let quarterlyProfitGrowthOverThreeQuarters;
+
+
+function populateExahangeCMPinNavbar(inputExchange,API_key) { 
+
+    let [stock_name_extention, stock_exchange_symbol] = getExchangeExtentionAndSymbol(inputExchange);
+    //console.log(stock_name_extention,stock_exchange_symbol)
+    let stock_exchange_index_link = "https://fmpcloud.io/api/v3/quote/" + stock_exchange_symbol  + "?apikey=" + API_key;
+
+    let stock_exchange_index_link_promise1 = fetch(stock_exchange_index_link);
+    stock_exchange_index_link_promise1.then((intermediate_data) => {
+        let stock_exchange_index_link_promise2 = intermediate_data.json();
+        stock_exchange_index_link_promise2.then((real_data) => { 
+            let exchange_price = real_data[0]['price'].toFixed(2);
+           
+            document.querySelector('#index_cmp').innerHTML = inputExchange + ' : ' + exchange_price;
+        })
+     })
+}
+
 
 function getExchangeExtentionAndSymbol(exchange_dropdown) { 
 
@@ -33,7 +56,7 @@ function getExchangeExtentionAndSymbol(exchange_dropdown) {
 //defining arrayOfDataForHeader globally so that the other functions will be able to use this array
 let arrayOfDataForHeader = [];
 
-async function populateStockHeaderInfo(link1, link2,setSuggestionsList) {
+async function populateStockHeaderInfo(link1, link2,setSuggestionsList,navbarMsg,setNavbarMsg) {
 
     
 
@@ -50,15 +73,28 @@ async function populateStockHeaderInfo(link1, link2,setSuggestionsList) {
     // 8. 52 week yearHigh
     // 9. 52 week yearLow
     // 10 company logo
+
+    document.querySelector('#add_to_watchlist_button').style.visibility = "visible";
+    document.querySelector('#stock_header_span_2').visibility = "visible";
     
-    setSuggestionsList(["LOADING......"])
+    setSuggestionsList(["LOADING......"]);
+    styleNavbarMessageBox(10);
+    setNavbarMsg("Loading data for the stock");
+    
     copyStockSuggestions = [];
     let promise1 = fetch(link1);
+    
     await promise1.then((intermediate_data) => {
+
+        
         let promise2 = intermediate_data.json();
         promise2.then((real_data) => {
 
-           
+            if (real_data.length === 0) { 
+                styleNavbarMessageBox(5)
+                setNavbarMsg("Invalid stock symbol. Please check stock symbol or the exchange");
+                setTimeout(() => {setNavbarMsg("") },5000)
+            }
            
             let cmp = real_data[0]['price'];
             let market_cap = real_data[0]['mktCap'];
@@ -110,7 +146,7 @@ async function populateStockHeaderInfo(link1, link2,setSuggestionsList) {
             arrayOfDataForHeader[7] = percentageChange;
             arrayOfDataForHeader[8] = _52_week_high;
             arrayOfDataForHeader[9] = _52_week_low;
-            console.log("ASSIGNED")
+            
         })
     })
 
@@ -121,6 +157,7 @@ async function populateStockHeaderInfo(link1, link2,setSuggestionsList) {
 
         setTimeout(() => {
             generateSuggestions(setSuggestionsList);
+            setNavbarMsg("");
          },4000)
        
     }, 1000);
@@ -271,31 +308,58 @@ async function populateTechnicalAnalysis(API_link_200_sma, API_link_50_sma, API_
             technical_analysis_signal = "NEUTRAL";
         }
 
-        let rsi_promsise1 = fetch(RSI_link);
+        
         message = `Technical analysis is giving ${technical_analysis_signal} signal`;
         copyStockSuggestions.push(message)
 
-                                          
-        rsi_promsise1.then((intermediate_data) => { 
-            let rsi_promise2 = intermediate_data.json();
-            rsi_promise2.then((real_data) => {
+        // let rsi_promsise1 = fetch(RSI_link); 
+        // console.log("rsi promise",rsi_promsise1)
+        // rsi_promsise1.then((intermediate_data) => { 
+        //     let rsi_promise2 = intermediate_data.json();
+        //     console.log("rsi_promise2 = ", rsi_promise2);
+        //     rsi_promise2.then((real_data) => {
 
-                let rsi = real_data[0]['rsi'].toFixed(2);
+        //         console.log("rsi real data = ",real_data)
+        //         let rsi = real_data[0]['rsi'].toFixed(2);
                
-                // document.querySelector('#rsa_div').innerText = "RSI : " + rsi;
-                // if (rsi < 30) {
-                //     suggestion_message.push(`RSI of this stock is ${rsi}, hence its a good time to buy this stock if fundamentals are good`)
+        //         // document.querySelector('#rsa_div').innerText = "RSI : " + rsi;
+        //         // if (rsi < 30) {
+        //         //     suggestion_message.push(`RSI of this stock is ${rsi}, hence its a good time to buy this stock if fundamentals are good`)
                    
-                // }
-                // else if (rsi > 70) { 
-                //     suggestion_message.push(`RSI of this stock is ${rsi}, hence the stock might have risen a lot and might correct in upcoming sessions`)
-                // }
+        //         // }
+        //         // else if (rsi > 70) { 
+        //         //     suggestion_message.push(`RSI of this stock is ${rsi}, hence the stock might have risen a lot and might correct in upcoming sessions`)
+        //         // }
 
                 
 
-            })
-        })
+        //     })
+        // })
         
+        let rsi_promsise1 = fetch(RSI_link);
+
+                                          
+                                            rsi_promsise1.then((intermediate_data) => { 
+                                                let rsi_promise2 = intermediate_data.json();
+                                                rsi_promise2.then((real_data) => {
+
+                                                    rsi = real_data[0]['rsi'].toFixed(2);
+                                                    document.querySelector('#rsi_div').innerHTML = "RSI = " + rsi;
+                                                    
+                                                   
+                                                  
+                                                    if (rsi < 30) {
+                                                        copyStockSuggestions.push(`RSI of this stock is ${rsi}, hence its a good time to buy this stock if fundamentals are good`)
+                                                       
+                                                    }
+                                                    else if (rsi > 70) { 
+                                                        copyStockSuggestions.push(`RSI of this stock is ${rsi}, hence the stock might have risen a lot and might correct in upcoming sessions`)
+                                                    }
+
+                                                    
+
+                                                })
+                                            })
     document.querySelector('#moving_average_table_row1_column_1').innerHTML = "200 days";
     document.querySelector('#moving_average_table_row1_column_2').innerHTML = _200_sma;
     document.querySelector('#moving_average_table_row2_column_1').innerHTML = "50 days";
@@ -306,8 +370,8 @@ async function populateTechnicalAnalysis(API_link_200_sma, API_link_50_sma, API_
     document.querySelector('#moving_average_table_row4_column_2').innerHTML = cmp;
     document.querySelector('#moving_average_table_row5_column_1').innerHTML = "Signal";
     document.querySelector('#moving_average_table_row5_column_2').innerHTML = technical_analysis_signal;
-        document.querySelector('#rsi_div').innerHTML = "RSI HT = " + rsi;
-        console.log("RSI = ",rsi)
+    document.querySelector('#rsi_div').innerHTML = "RSI HT = " + rsi;
+       
      }, 2000);
 
     
@@ -365,6 +429,8 @@ function generateTechnicalAnalysisModuleStructure() {
 }
 
 function generateFinancialInformationStructure() {
+
+    document.querySelector('#stock_line_info_right').innerHTML = "";
     
     let financial_info_div_name;
     let div_content_description;
@@ -432,7 +498,7 @@ function generateFinancialInformationStructure() {
     }
 
     
-    console.log();
+  
      
     
 
@@ -499,6 +565,11 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
     if (isPageLoadingForFirstTime === true) { 
         generateFinancialInformationStructure();
     }
+    highestEverQuarterlyNetProfitFlag = false;
+    lossInLatestQuarter = false;
+    quarterlyProfitGrowthOverFourQuarters = false;
+    quarterlyProfitGrowthOverThreeQuarters = false;
+
 
     let promise1 = fetch(quarterly_income_statement_link);
     
@@ -610,8 +681,35 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
                          document.querySelector(target_element).style.fontWeight = "bold";
                      }
 
+                     
+
                      else {
                          document.querySelector(target_element).innerText = (final_data[j]['netIncome'] / 10000000).toFixed(2);
+                     }
+
+                 
+                     let tempArrForQuarterlyNetProfit = [];
+                     for (let i = 0; i < 8; i++) { 
+
+                        tempArrForQuarterlyNetProfit.push(final_data[i]['netIncome']);
+                     }
+
+                     if (Math.max(...tempArrForQuarterlyNetProfit) === tempArrForQuarterlyNetProfit[0]) { 
+                         highestEverQuarterlyNetProfitFlag = true;
+                     }
+                     if (tempArrForQuarterlyNetProfit[0] < 0)
+                     {
+                         lossInLatestQuarter = true;
+                     }
+                     
+                     if (tempArrForQuarterlyNetProfit[0] > tempArrForQuarterlyNetProfit[1] && tempArrForQuarterlyNetProfit[1] > tempArrForQuarterlyNetProfit[2] && tempArrForQuarterlyNetProfit[2] > tempArrForQuarterlyNetProfit[3]) { 
+                         quarterlyProfitGrowthOverFourQuarters = true;
+                     }
+
+                     if (quarterlyProfitGrowthOverFourQuarters === false) { 
+                         if (tempArrForQuarterlyNetProfit[0] > tempArrForQuarterlyNetProfit[1] && tempArrForQuarterlyNetProfit[1] > tempArrForQuarterlyNetProfit[2]) { 
+                             quarterlyProfitGrowthOverThreeQuarters = true;
+                         }
                      }
 
                      target_element = `revenue_table_column_${j}_row_${i}`
@@ -650,12 +748,12 @@ function findMatchingStocks(stock_search_query, exchange,display_results_limit,A
         
     let search_search_query_API_link = `https://fmpcloud.io/api/v3/search?query=${stock_search_query}&limit=${display_results_limit}&exchange=${exchange}&apikey=${API_key}`;
     
-    console.log(search_search_query_API_link)
+ 
     let promise1 = fetch(search_search_query_API_link);
     promise1.then((intermediate_data) => { 
         let promise2 = intermediate_data.json();
         promise2.then((real_data) => { 
-            console.log("OUTPUT - ",real_data)
+            //console.log("OUTPUT - ",real_data)
         })
     })
 
@@ -668,7 +766,7 @@ function populateStockPeers(stock_peers_link) {
     promise1.then((intermediate_data) => { 
         let promise2 = intermediate_data.json();
         promise2.then((json_data) => { 
-            console.log(json_data);
+            
 
             let peers_list_div = document.querySelector('#homepage_container_bottom_right_body');
             peers_list_div.innerHTML = '';
@@ -698,10 +796,34 @@ function generateSuggestions(setSuggestionsList) {
     if (percentDownFrom52weekHigh > 0) { 
         message = `stock is trading ${percentDownFrom52weekHigh}% down from its 52 week high`;
         copyStockSuggestions.push(message);
+
+        if (highestEverQuarterlyNetProfitFlag === true) { 
+            copyStockSuggestions.push("The company has posted highest ever quarterly net profit(among last 8 quarters) in the latest quarter.");
+        }
+
+        if (lossInLatestQuarter === true)
+        {
+            copyStockSuggestions.push("The company has posted loss in latest quarter")
+        }
+        if (quarterlyProfitGrowthOverFourQuarters === true)
+        {
+            copyStockSuggestions.push("The company's quartely profits have been rising over recent 4 quarters")
+        }
+
+        if (quarterlyProfitGrowthOverFourQuarters === false && quarterlyProfitGrowthOverThreeQuarters === true) { 
+            copyStockSuggestions.push("The company's quartely profits have been rising over recent 3 quarters")
+        }
+
         setSuggestionsList(copyStockSuggestions)
     }
    
 
 }
 
-export {populateStockPeers, getExchangeExtentionAndSymbol,populateStockHeaderInfo,populateTechnicalAnalysis,populateFinancialInformation,findMatchingStocks,generateSuggestions};
+function styleNavbarMessageBox(margin_right)
+{
+    document.querySelector('#navbar_messagebox').style.marginRight = margin_right + 'vw';
+    document.querySelector('#navbar_messagebox').style.fontWeight = "bold";
+}
+
+export {populateStockPeers, getExchangeExtentionAndSymbol,populateStockHeaderInfo,populateTechnicalAnalysis,styleNavbarMessageBox,populateExahangeCMPinNavbar,populateFinancialInformation,findMatchingStocks,generateSuggestions};
