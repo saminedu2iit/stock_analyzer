@@ -2,7 +2,7 @@ import './../Styles/Homepage.css'
 import { useState,useMemo, useEffect } from 'react';
 import SearchSuggestions from './SearchSuggestions';
 import TechnicalChart from './TechnicalChart'
-import { populateStockPeers,populateStockHeaderInfo,populateTechnicalAnalysis,populateFinancialInformation,styleNavbarMessageBox,generateSuggestions,populateExahangeCMPinNavbar } from './../Utilities/HomepageUtilities';
+import { populateStockPeers,populateStockHeaderInfo,populateRatingInfo,populateTechnicalAnalysis,populateFinancialInformation,styleNavbarMessageBox,generateSuggestions,populateExahangeCMPinNavbar } from './../Utilities/HomepageUtilities';
 import { addToLocalStorageWatchList, getWatchlistArrayFromLocalStorage, LocalStorageRemoveItem } from '../Utilities/LocalStorageUtilities.js';
 import { Link } from 'react-router-dom';
 import Watchlist from './Watchlist';
@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { GlobalStateStore } from "./GlobalStateStore";
 import { getArrayOfDailyClosingPrice } from './../Utilities/TechnicalCartUtilities';
 import StockSuggestions from './StockSuggestions';
+import Rating from './Rating'
 
 
 
@@ -30,7 +31,7 @@ function Homepage() {
     let [isWatchlistLoaded, setIsWatchlistLoaded] = useState(false);
     let [isPageLoadingForFirstTime, setIsPageLoadingForFirstTime] = useState(true);
     let [chartPeriod, setChartPeriod] = useState('90_days');
-    let [suggestionsList, setSuggestionsList] = useState([])
+    let [suggestionsList, setSuggestionsList] = useState([]);
 
     let [stockTechnicalChart, setStockTechnicalChart, p1, setp1, p2, setp2,navbarMsg,setNavbarMsg,chartPeriodGlobal, setChartPeriodGlobal] = useContext(GlobalStateStore);
 
@@ -178,6 +179,8 @@ function Homepage() {
             getArrayOfDailyClosingPrice(inputStock,setp1,setp2,chartPeriod);
             
             setStockTechnicalChart(inputStock);
+
+            let ratingLink = "https://fmpcloud.io/api/v3/rating/" + inputStock + "?apikey="+API_key
             
             let RSI_link = "https://fmpcloud.io/api/v3/technical_indicator/daily/"+inputStock + "?period=10&type=rsi&apikey=" + API_key
             let API_link_stock_intro = "https://fmpcloud.io/api/v3/profile/" + inputStock + "?apikey=" + API_key;
@@ -197,7 +200,8 @@ function Homepage() {
             populateFinancialInformation(isPageLoadingForFirstTime, quarterly_income_statement_link, cash_from_operating_activities_link);
             populateStockPeers(stock_peers_link);
             //generateSuggestions(setSuggestionsList)
-
+        
+            populateRatingInfo(isPageLoadingForFirstTime,ratingLink)
 
             if (isPageLoadingForFirstTime === true) {
                 setIsPageLoadingForFirstTime(false)
@@ -423,6 +427,8 @@ function Homepage() {
                 </div>
                 
             </div>
+
+            <Rating/>
             
         </div>
     )

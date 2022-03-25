@@ -14,7 +14,7 @@ body
     border: 2px solid black;
     margin-top: 2vh;
     width: 98vw;
-    height: 125vh;
+    height: 165vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -3,6 +3,7 @@ let highestEverQuarterlyNetProfitFlag;
 let lossInLatestQuarter;
 let quarterlyProfitGrowthOverFourQuarters;
 let quarterlyProfitGrowthOverThreeQuarters;
+let companyRatingScore;
 
 
 function populateExahangeCMPinNavbar(inputExchange, API_key) {
@@ -790,6 +791,9 @@ function generateSuggestions(setSuggestionsList) {
             copyStockSuggestions.push("The company's quartely profits have been rising over recent 3 quarters")
         }
 
+        if (companyRatingScore !== undefined) {
+            copyStockSuggestions.push(`As per latest records, company has the rating score of ${companyRatingScore}`)
+        }
         setSuggestionsList(copyStockSuggestions)
     }
    
@@ -802,4 +806,201 @@ function styleNavbarMessageBox(margin_right)
     document.querySelector('#navbar_messagebox').style.fontWeight = "bold";
 }
 
-export {populateStockPeers, getExchangeExtentionAndSymbol,populateStockHeaderInfo,populateTechnicalAnalysis,styleNavbarMessageBox,populateExahangeCMPinNavbar,populateFinancialInformation,findMatchingStocks,generateSuggestions};
+
+function generateRatingTableStructure() { 
+
+    document.querySelector('#rating_body_1_span_left').innerHTML = "Company Rating";
+    document.querySelector('#rating_body_2_span_left').innerHTML = "Recommendations as per rating";
+
+    let rating_table = document.createElement('table');
+    rating_table.setAttribute('id','rating_table1')
+    let tr1 = document.createElement('tr');
+    tr1.setAttribute('id',"rating_table1_row1")
+    let tr2 = document.createElement('tr');
+    tr2.setAttribute('id', "rating_table1_row2");
+    console.log(tr1)
+
+    for (let i = 1; i <= 2; i++) { 
+
+        
+        for (let j = 1; j <= 3; j++) { 
+
+            let column_name = `rating_table1_row${i}_column${j}`;
+            let new_column = document.createElement('td');
+            new_column.setAttribute('id', column_name);
+            new_column.setAttribute('class','rating_table_column')
+            
+            
+            if (i == 1) {
+                tr1.appendChild(new_column);
+
+                if (j == 1) {
+
+                    new_column.innerHTML="Date"
+
+                }
+                else if (j === 2) {
+                    new_column.innerHTML="Rating"
+
+                }
+                else { 
+                    new_column.innerHTML="Rating Score"
+                }
+            }
+            else { 
+                tr2.appendChild(new_column)
+            }
+
+        }
+
+        rating_table.append(tr1);
+        rating_table.append(tr2);
+    
+
+
+    }
+    document.querySelector('#rating_body_1_span_right').append(rating_table);
+
+
+    rating_table = document.createElement('table');
+    rating_table.setAttribute('id','rating_table2')
+    tr1 = document.createElement('tr');
+    tr1.setAttribute('id',"rating_table2_row1")
+    tr2 = document.createElement('tr');
+    tr2.setAttribute('id', "rating_table2_row2");
+    console.log(tr1)
+
+    for (let i = 1; i <= 2; i++) { 
+
+        
+        for (let j = 1; j <= 6; j++) { 
+
+            let column_name = `rating_table2_row${i}_column${j}`;
+            let new_column = document.createElement('td');
+            new_column.setAttribute('id', column_name);
+            new_column.setAttribute('class','rating_table_column')
+            
+            
+            if (i == 1) {
+                tr1.appendChild(new_column);
+
+                if (j == 1) {
+
+                    new_column.innerHTML="Rating"
+
+                }
+                else if (j === 2) {
+                    new_column.innerHTML="DCF"
+
+                }
+                else if(j===3){ 
+                    new_column.innerHTML="ROE"
+                }
+                else if(j===4){ 
+                    new_column.innerHTML="ROA"
+                }
+                else if(j===5){ 
+                    new_column.innerHTML="DE"
+                }
+                else if(j===6){ 
+                    new_column.innerHTML="PE"
+                }
+                else if(j===7){ 
+                    new_column.innerHTML="PB"
+                }
+            }
+            else { 
+                tr2.appendChild(new_column)
+            }
+
+        }
+
+        rating_table.append(tr1);
+        rating_table.append(tr2);
+    
+
+
+    }
+
+    
+    document.querySelector('#rating_body_2_span_right').append(rating_table);
+
+    let acronym_heading = document.createElement('h3');
+    acronym_heading.setAttribute('id', 'acronym_heading');
+    acronym_heading.innerHTML="Acronyms : "
+    document.querySelector('#rating_body_right').append(acronym_heading);
+
+
+    let acronym_list = document.createElement('ul');
+    acronym_list.setAttribute('id','acronym_list')
+    let li1 = document.createElement('li');
+    li1.setAttribute('class','acronym_list_element')
+    li1.innerHTML = "DCF = Discounted Cash Flow";
+    let li2 = document.createElement('li');
+    li2.setAttribute('class','acronym_list_element')
+    li2.innerHTML = "ROE = Return On Equity";
+    let li3 = document.createElement('li');
+    li3.setAttribute('class','acronym_list_element')
+    li3.innerHTML = "ROA = Return On Assets";
+    let li4 = document.createElement('li');
+    li4.setAttribute('class','acronym_list_element')
+    li4.innerHTML = "DE = Debt to Equity";
+    let li5 = document.createElement('li');
+    li5.setAttribute('class','acronym_list_element')
+    li5.innerHTML = "PE = Price/Earning Ratio";
+    let li6 = document.createElement('li');
+    li6.setAttribute('class','acronym_list_element')
+    li6.innerHTML = "PB = Price/Book ratio";
+    
+
+    acronym_list.appendChild(li1);
+    acronym_list.appendChild(li2);
+    acronym_list.appendChild(li3);
+    acronym_list.appendChild(li4);
+    acronym_list.appendChild(li5);
+    acronym_list.appendChild(li6);
+
+    document.querySelector('#rating_body_right').append(acronym_list);
+
+
+
+
+
+
+
+    
+
+}
+
+function populateRatingInfo(isPageLoadingForFirstTime, ratingLink) {
+    
+    if (isPageLoadingForFirstTime === true) {
+        
+        //generate rating table structure
+        
+        
+        generateRatingTableStructure();
+        console.log("gen")
+    }
+
+    let promise1 = fetch(ratingLink);
+    promise1.then((intermediate_data) => { 
+        let promise2 = intermediate_data.json();
+        promise2.then((json_data) => { 
+            companyRatingScore = json_data[0]['ratingScore'];
+            document.querySelector('#rating_table1_row2_column1').innerHTML = json_data[0]['date'];
+            document.querySelector('#rating_table1_row2_column2').innerHTML = json_data[0]['rating'];
+            document.querySelector('#rating_table1_row2_column3').innerHTML = json_data[0]['ratingScore'];
+            document.querySelector('#rating_table2_row2_column1').innerHTML = json_data[0]['ratingRecommendation'];
+            document.querySelector('#rating_table2_row2_column2').innerHTML = json_data[0]['ratingDetailsDCFRecommendation'];
+            document.querySelector('#rating_table2_row2_column3').innerHTML = json_data[0]['ratingDetailsROERecommendation'];
+            document.querySelector('#rating_table2_row2_column4').innerHTML = json_data[0]['ratingDetailsROARecommendation'];
+            document.querySelector('#rating_table2_row2_column5').innerHTML = json_data[0]['ratingDetailsDERecommendation'];
+            document.querySelector('#rating_table2_row2_column6').innerHTML = json_data[0]['ratingDetailsPERecommendation'];
+            document.querySelector('#rating_table2_row2_column7').innerHTML = json_data[0]['ratingDetailsPBRecommendation'];
+        })
+    })
+}
+
+
+export {populateStockPeers, populateRatingInfo,getExchangeExtentionAndSymbol,populateStockHeaderInfo,populateTechnicalAnalysis,styleNavbarMessageBox,populateExahangeCMPinNavbar,populateFinancialInformation,findMatchingStocks,generateSuggestions};

@@ -3,7 +3,8 @@ function About() {
 
     return (
         <div id="about_div">
-            <h2 id="about_heading">Stock Analyzer</h2>
+            
+            <h2 id="about_heading"> <img id="stock_analysis_logo" width="50" height="30" src="https://www.pngfind.com/pngs/m/107-1077603_png-black-and-white-stock-combo-chart-icon.png" alt="stock analysis logo"></img>Stock Analyzer</h2>
 
             <div id="about_details">
 
