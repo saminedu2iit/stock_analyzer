@@ -357,6 +357,15 @@ body
 
 #stock_search_button:hover{
     cursor: pointer;
+    background-color: rgb(255, 224, 179)
+    
+}
+
+#stock_search_button{
+    width: 5vw;
+    background-color: blanchedalmond;
+    text-align: center;
+    font-weight: bold;
 }
 
 .peers_list_item_div{
@@ -391,13 +400,15 @@ body
 }
 
 #add_to_watchlist_button{
-    width: 8vw;
+    width: 9vw;
     height: 4vh;
     background-color: pink;
     color: black;
     font-family:  'Open Sans', sans-serif;
+    font-weight: bold;
 }
 
 #add_to_watchlist_button:hover{
    cursor: pointer;
+   background-color:rgb(252, 166, 180);
 }

@@ -4,11 +4,12 @@ let lossInLatestQuarter;
 let quarterlyProfitGrowthOverFourQuarters;
 let quarterlyProfitGrowthOverThreeQuarters;
 let companyRatingScore;
+let negativeCashFromOAinRecentYear;
 
 
 function populateExahangeCMPinNavbar(inputExchange, API_key) {
     
-    console.log("get for ",inputExchange)
+   
 
     let [stock_name_extention, stock_exchange_symbol] = getExchangeExtentionAndSymbol(inputExchange);
   
@@ -19,7 +20,12 @@ function populateExahangeCMPinNavbar(inputExchange, API_key) {
         let stock_exchange_index_link_promise2 = intermediate_data.json();
         stock_exchange_index_link_promise2.then((real_data) => { 
             let exchange_price = real_data[0]['price'].toFixed(2);
+
+            if (inputExchange === "NSE") {
+                inputExchange="NIFTY50"
+             }
            
+
             document.querySelector('#index_cmp').innerHTML = inputExchange + ' : ' + exchange_price;
         })
      })
@@ -33,20 +39,20 @@ function getExchangeExtentionAndSymbol(exchange_dropdown) {
 
     let arrayOfExchangeInfo = [];
 
-    if (exchange_dropdown == "NSE") {
+    if (exchange_dropdown === "NSE") {
         stock_name_extention = ".NS";
         stock_exchange_symbol="^NSEI"
     
     }
-    else if (exchange_dropdown == "NASDAQ") {
+    else if (exchange_dropdown === "NASDAQ") {
         stock_name_extention = "";
         stock_exchange_symbol = "^NDX";
     }
-    else if (exchange_dropdown == "XETRA") { 
+    else if (exchange_dropdown === "XETRA") { 
         stock_name_extention = ".DE"
         stock_exchange_symbol = "^GDAXI";
     }
-    else if (exchange_dropdown == "MCE")
+    else if (exchange_dropdown === "MCE")
     {
         stock_name_extention = ".MC"
         stock_exchange_symbol = "^IBEX";
@@ -183,10 +189,10 @@ function generateHeaderStructure(arrayOfData) {
 
 
 
-        if (i == 2) {
+        if (i === 2) {
             document.querySelector(current_span_id).href = arrayOfData[i];
         }
-        else if (i == 4)
+        else if (i === 4)
         { 
             document.querySelector(current_span_id).innerHTML = entity_name + arrayOfData[i] + " Cr";
         }
@@ -201,36 +207,36 @@ function generateHeaderStructure(arrayOfData) {
 function getEntityNameForStockHeaderInfo(i) {
     let entity_name;
 
-    if (i == 0)
+    if (i === 0)
     {
         entity_name = "";
 
         }
-    else if (i == 1) {
+    else if (i === 1) {
         entity_name = "Industry : ";
     }
-    else if (i == 3) { 
+    else if (i === 3) { 
         entity_name = "Exchange : ";
     }
-    else if (i == 4) { 
+    else if (i === 4) { 
         entity_name = "Market Cap : ";
     }
-    else if (i == 5) { 
+    else if (i === 5) { 
         entity_name = "Currency : ";
     }
 
-    else if (i == 6) { 
+    else if (i === 6) { 
         entity_name = "CMP : ";
     }
-    else if (i == 7)
+    else if (i === 7)
     {
         entity_name = "";
         }
 
-    else if (i == 8) { 
+    else if (i === 8) { 
         entity_name = "52 week high : ";
     }
-    else if (i == 9) { 
+    else if (i === 9) { 
         entity_name = "52 week low : ";
     }
 
@@ -446,17 +452,17 @@ function generateFinancialInformationStructure() {
         sub_div_right_id = financial_info_div_name + 'sub_div_right';
             sub_div_right.setAttribute('id', sub_div_right_id);
             
-            if (i == 1) { 
+            if (i === 1) { 
                 
                 financial_data_table = generateCustomEmptyTable(2, 8, "quarterly_net_profit_table_row", "quarterly_net_profit_table_column","quarterly_net_profit_row", "quarterly_net_profit_column", "quarterly_net_profit_table");
 
             }
-            else if (i == 2)
+            else if (i === 2)
             {
                 financial_data_table = generateCustomEmptyTable(2, 8, "cash_from_OA_table_row", "cash_from_OA_table_column", "cash_from_OA_row", "cash_from_OA_column","cash_from_OA_table");
             }
             
-            else if (i == 3)
+            else if (i === 3)
             {
                 financial_data_table = generateCustomEmptyTable(2, 8, "revenue_table_row", "revenue_table_column", "revenue_row", "revenue_column","revenue_table");
                 }
@@ -549,6 +555,7 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
     lossInLatestQuarter = false;
     quarterlyProfitGrowthOverFourQuarters = false;
     quarterlyProfitGrowthOverThreeQuarters = false;
+    negativeCashFromOAinRecentYear = false;
 
 
     let promise1 = fetch(quarterly_income_statement_link);
@@ -567,12 +574,12 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
                 quarterly_interest_income_array.push(final_data[i]['interestIncome']);
             }
              
-            let tempDate = final_data[0]["date"].slice(0, 4);
-            let tempYear = tempDate.slice(0, 4);
+           
+           
              
             let temp_revenue_array = [];
 
-            if (quarterly_interest_income_array[0] == 0) {
+            if (quarterly_interest_income_array[0] === 0) {
                 temp_revenue_array = quarterly_revenue_array;
             }
             else {
@@ -598,11 +605,18 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
                             target_element = `cash_from_OA_table_column_${j}_row_${i}`;
                             target_element = '#' + target_element;
         
-                            if (i == 0) {
+                            if (i === 0) {
                                 document.querySelector(target_element).innerText = (real_data[j]["date"]).slice(0, 4);
                                 document.querySelector(target_element).style.fontWeight = "bold";
                            }
-                           else { 
+                            else { 
+                                
+                                if (j === 0 && real_data[j]['netCashProvidedByOperatingActivities'] < 0) {
+                                    
+                                    negativeCashFromOAinRecentYear = true;
+                                    
+
+                                }
                               document.querySelector(target_element).innerText = (real_data[j]['netCashProvidedByOperatingActivities'] / 10000000).toFixed(2);
                            }
 
@@ -632,7 +646,7 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
                      target_element = '#' + target_element;
                      
                     
-                     if (i == 0) {
+                     if (i === 0) {
 
                          let year = final_data[j]["date"].slice(0, 4);
                          let month = final_data[j]["date"].slice(5, 7);
@@ -692,15 +706,15 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
                      target_element = `revenue_table_column_${j}_row_${i}`
                      target_element = '#' + target_element;
 
-                     if (i == 0) {
+                     if (i === 0) {
                         let year = final_data[j]["date"].slice(0, 4);
-                        let month = final_data[j]["date"].slice(5, 7);
+                       
                       
                         document.querySelector(target_element).innerText = (year + "-" + period);
                          document.querySelector(target_element).style.fontWeight = "bold";
                      }
                      else { 
-                        document.querySelector(target_element).innerText = final_data[j]['interestIncome'] == 0 ? (final_data[j]['revenue'] / 10000000).toFixed(2) : (final_data[j]['interestIncome'] / 10000000).toFixed(2);
+                        document.querySelector(target_element).innerText = final_data[j]['interestIncome'] === 0 ? (final_data[j]['revenue'] / 10000000).toFixed(2) : (final_data[j]['interestIncome'] / 10000000).toFixed(2);
                      }                                     
                      
                  }
@@ -794,7 +808,12 @@ function generateSuggestions(setSuggestionsList) {
         if (companyRatingScore !== undefined) {
             copyStockSuggestions.push(`As per latest records, company has the rating score of ${companyRatingScore}`)
         }
+
+        if (negativeCashFromOAinRecentYear === true) {
+            copyStockSuggestions.push("As per the latest records, the company has NEGATIVE cash from Operating Activities.")
+         }
         setSuggestionsList(copyStockSuggestions)
+
     }
    
 
@@ -818,7 +837,7 @@ function generateRatingTableStructure() {
     tr1.setAttribute('id',"rating_table1_row1")
     let tr2 = document.createElement('tr');
     tr2.setAttribute('id', "rating_table1_row2");
-    console.log(tr1)
+    
 
     for (let i = 1; i <= 2; i++) { 
 
@@ -831,10 +850,10 @@ function generateRatingTableStructure() {
             new_column.setAttribute('class','rating_table_column')
             
             
-            if (i == 1) {
+            if (i === 1) {
                 tr1.appendChild(new_column);
 
-                if (j == 1) {
+                if (j === 1) {
 
                     new_column.innerHTML="Date"
 
@@ -868,7 +887,7 @@ function generateRatingTableStructure() {
     tr1.setAttribute('id',"rating_table2_row1")
     tr2 = document.createElement('tr');
     tr2.setAttribute('id', "rating_table2_row2");
-    console.log(tr1)
+
 
     for (let i = 1; i <= 2; i++) { 
 
@@ -881,10 +900,10 @@ function generateRatingTableStructure() {
             new_column.setAttribute('class','rating_table_column')
             
             
-            if (i == 1) {
+            if (i === 1) {
                 tr1.appendChild(new_column);
 
-                if (j == 1) {
+                if (j === 1) {
 
                     new_column.innerHTML="Rating"
 
@@ -980,7 +999,7 @@ function populateRatingInfo(isPageLoadingForFirstTime, ratingLink) {
         
         
         generateRatingTableStructure();
-        console.log("gen")
+      
     }
 
     let promise1 = fetch(ratingLink);

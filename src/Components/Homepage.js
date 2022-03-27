@@ -416,7 +416,7 @@ function Homepage() {
             </div>
             <div id="homepage_container_bottom">
                 <div id="homepage_container_bottom_left">
-                    <div id="homepage_container_bottom_left_header">SUGGESTIONS</div>
+                    <div id="homepage_container_bottom_left_header">STOCK ANALYSIS</div>
                     <div id="homepage_container_bottom_left_body">
                         {memoizedStockSuggestions}
                     </div>
