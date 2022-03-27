@@ -7,9 +7,12 @@ import TechnicalChart from './Components/TechnicalChart';
 import { GlobalStateStore, GlobalStateStoreData } from './Components/GlobalStateStore';
 import About from './Components/About';
 import Learn from './Components/Learn';
+import Screener from './Components/Screener';
 import News from './Components/News'
 
 function App() {
+
+  let API_key_main = process.env.REACT_APP_API_KEY;
   return (
     <GlobalStateStoreData>
     <BrowserRouter>
@@ -35,8 +38,22 @@ function App() {
             return (
               <>
               {/* <Navbar /> */}
-              <Homepage />
+                <Homepage API_key={process.env.REACT_APP_API_KEY}/>
                 <TechnicalChart />
+                {/* <News/> */}
+            </>
+              
+            )
+           
+          }}>
+          </Route>
+          
+          <Route exact path="/screener" render={() => {
+            return (
+              <>
+              {/* <Navbar /> */}
+              
+                <Screener />
                 {/* <News/> */}
             </>
               

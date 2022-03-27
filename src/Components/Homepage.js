@@ -16,10 +16,10 @@ import Rating from './Rating'
 
 let API_key = "6ce511bda188cc745eb33e6ad907c5ec";
 
-function Homepage() {
+function Homepage(props) {
 
    
-   
+   //console.log("AAA",props.API_key)
 
 
     let [inputStock, setInputStock] = useState('');
