@@ -2,7 +2,7 @@ import './../Styles/Learn.css'
 function Learn() { 
     return (
         <div id="learn_div">
-            <h4>In order to find a good stock for trading, we should focus on three kinds of analysis : Business
+            <h4 id="learn_heading">In order to find a good stock for trading, we should focus on three kinds of analysis : Business
                 analysis, Fundamental analysis and Technical Analysis. Following are some of the best resources to learn the fundamentals of trading in Stock Market. </h4>
 
             <ol id="learing_resources_list">
