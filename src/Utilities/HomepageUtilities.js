@@ -5,6 +5,7 @@ let quarterlyProfitGrowthOverFourQuarters;
 let quarterlyProfitGrowthOverThreeQuarters;
 let companyRatingScore;
 let negativeCashFromOAinRecentYear;
+let highestEverQuarterlyRevenue;
 
 
 function populateExahangeCMPinNavbar(inputExchange, API_key) {
@@ -356,6 +357,24 @@ async function populateTechnicalAnalysis(API_link_200_sma, API_link_50_sma, API_
     document.querySelector('#moving_average_table_row4_column_2').innerHTML = cmp;
     document.querySelector('#moving_average_table_row5_column_1').innerHTML = "Signal";
     document.querySelector('#moving_average_table_row5_column_2').innerHTML = technical_analysis_signal;
+    
+        if (technical_analysis_signal === "BUY") {
+            document.querySelector('#moving_average_table_row5_column_2').style.backgroundColor = "lightgreen";
+            document.querySelector('#moving_average_table_row5_column_2').style.color = "green";
+
+        }
+        else if
+            (technical_analysis_signal === "SELL") {
+            document.querySelector('#moving_average_table_row5_column_2').style.backgroundColor = "lightred";
+            document.querySelector('#moving_average_table_row5_column_2').style.color = "red";
+
+        }
+        else { 
+            document.querySelector('#moving_average_table_row5_column_2').style.backgroundColor = "blanchedalmond";
+            document.querySelector('#moving_average_table_row5_column_2').style.color = "black";
+
+        }
+    
    
        
      }, 2000);
@@ -556,6 +575,7 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
     quarterlyProfitGrowthOverFourQuarters = false;
     quarterlyProfitGrowthOverThreeQuarters = false;
     negativeCashFromOAinRecentYear = false;
+    highestEverQuarterlyRevenue = false;
 
 
     let promise1 = fetch(quarterly_income_statement_link);
@@ -635,6 +655,7 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
 
             
             let period;
+            let tempRevenueArray = [];
 
             
 
@@ -680,6 +701,7 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
 
                  
                      let tempArrForQuarterlyNetProfit = [];
+                     
                      for (let i = 0; i < 8; i++) { 
 
                         tempArrForQuarterlyNetProfit.push(final_data[i]['netIncome']);
@@ -713,11 +735,17 @@ async function populateFinancialInformation(isPageLoadingForFirstTime,quarterly_
                         document.querySelector(target_element).innerText = (year + "-" + period);
                          document.querySelector(target_element).style.fontWeight = "bold";
                      }
-                     else { 
+                     else {
+                        tempRevenueArray.push(final_data[j]['interestIncome'] === 0 ? Number((final_data[j]['revenue'] / 10000000).toFixed(2)) :Number( (final_data[j]['interestIncome'] / 10000000).toFixed(2)))
                         document.querySelector(target_element).innerText = final_data[j]['interestIncome'] === 0 ? (final_data[j]['revenue'] / 10000000).toFixed(2) : (final_data[j]['interestIncome'] / 10000000).toFixed(2);
                      }                                     
                      
                  }
+                
+                 if (Math.max(...tempRevenueArray) === tempRevenueArray[0]) { 
+                     highestEverQuarterlyRevenue = true;
+                 }
+                 
              }
 
 
@@ -811,7 +839,11 @@ function generateSuggestions(setSuggestionsList) {
 
         if (negativeCashFromOAinRecentYear === true) {
             copyStockSuggestions.push("As per the latest records, the company has NEGATIVE cash from Operating Activities.")
-         }
+        }
+        
+        if (highestEverQuarterlyRevenue === true) { 
+            copyStockSuggestions.push("The company has generated highest ever quarterly revenue(among last 8 quarters) in the latest quarter.");
+        }
         setSuggestionsList(copyStockSuggestions)
 
     }
@@ -1016,7 +1048,7 @@ function populateRatingInfo(isPageLoadingForFirstTime, ratingLink) {
             document.querySelector('#rating_table2_row2_column4').innerHTML = json_data[0]['ratingDetailsROARecommendation'];
             document.querySelector('#rating_table2_row2_column5').innerHTML = json_data[0]['ratingDetailsDERecommendation'];
             document.querySelector('#rating_table2_row2_column6').innerHTML = json_data[0]['ratingDetailsPERecommendation'];
-            document.querySelector('#rating_table2_row2_column7').innerHTML = json_data[0]['ratingDetailsPBRecommendation'];
+            //document.querySelector('#rating_table2_row2_column7').innerHTML = json_data[0]['ratingDetailsPBRecommendation'];
         })
     })
 }
